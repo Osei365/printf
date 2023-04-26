@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
+
 #define BUFF_SIZE 1024
 /**
  * struct function_specifiers - the specifiers structure
@@ -30,4 +31,10 @@ int print_percentage(va_list args, char buf[]);
 int print_integer(va_list args, char buf[]);
 int print_spec(const char *format, int *i, va_list args, char buf[]); 
 
+
+
+int size(const char format, int *ind);
+int flags(const char format, int *ind);
+int width(const char format, int *ind, va_list args);
+int precision(const char format, int *ind, va_list args);
 #endif

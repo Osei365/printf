@@ -12,41 +12,41 @@
  *
  * Return: number of printed chars
  */
-int print_non_printable(va_list types, char buffer[],
-	int flags, int width, int precision, int size)
+int print_non_printable(va_list args, char buf[],
+	int flag, int width, int precision, int size)
 {
-	int i = 0;
+	int a = 0;
 	int offset = 0;
 	int spaces = 0;
 	char *str = va_arg(types, char *);
 
-	UNUSED(flags);
-	UNUSED(width);
-	UNUSED(precision);
-	UNUSED(size);
+	(void)(flag);
+	(void)(width);
+	(void)(precision);
+	(void)(size);
 
 	if (str == NULL)
 	{
 		return (write(1, "(NULL)", 6));
 	}
-	while (str[i] != '\0')
+	while (str[a] != '\0')
 	{
-		if (is_printable(str[i]))
+		if (is_printable(str[a]))
 		{
-			buffer[i + offset] = str[i];
+			buf[a + offset] = str[a];
 		}
 		else
 		{
-			offset += append_hexa_code(str[i], buffer, i + offset);
+			offset += append_hexa_code(str[a], buf, a + offset);
 		}
-		i++;
+		a++;
 	}
 
-	spaces = width - (i + offset);
+	spaces = width - (a + offset);
 
-	if ((flags & FLAG_MINUS) != 0)
+	if ((flag & 1) != 0)
 	{
-		write(1, buffer, i + offset);
+		write(1, buf, a + offset);
 		write_spaces(spaces);
 	}
 	else
