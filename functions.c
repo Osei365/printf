@@ -31,7 +31,7 @@ int print_string(va_list args, char buf[], int flag, int width,
 		int precision, int size)
 {
 	char *str;
-	int l;
+	int l, a;
 
 	(void)(buf);
 	(void)(flag);
@@ -71,6 +71,10 @@ int print_string(va_list args, char buf[], int flag, int width,
  * print_percentage - prints the percentage
  * @args: the variable argument
  * @buf: the buffer
+ * @flag: flag
+ * @width: width
+ * @precision: precision
+ * @size: size
  * Return: printed percentage
  */
 int print_percentage(va_list args, char buf[], int flag, int width,
@@ -96,7 +100,7 @@ int print_percentage(va_list args, char buf[], int flag, int width,
  * Return: printed integer
  */
 int print_integer(va_list args, char buf[], int flag, int width,
-		int precision. int size)
+		int precision, int size)
 {
 	int a = BUFF_SIZE - 2;
 	long int ch = va_arg(args, long int);
@@ -122,5 +126,5 @@ int print_integer(va_list args, char buf[], int flag, int width,
 		n /= 10;
 	}
 	a++;
-	return (write_int(negative_bool, buf, precision, width, size, flag));
+	return (write_int(negative_bool, a, buf, precision, width, size, flag));
 }

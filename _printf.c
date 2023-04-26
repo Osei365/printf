@@ -11,6 +11,7 @@ int _printf(const char *format, ...)
 {
 	va_list args;
 	int a, chars_count = 0, b_ind = 0, spec_count = 0;
+	int flag, width, precision, size;
 	char buff[BUFF_SIZE];
 
 	if (format == NULL)
@@ -30,8 +31,13 @@ int _printf(const char *format, ...)
 		else
 		{
 			write_buffer(buff, &b_ind);
+			flags = flags(format, &a);
+			size = size(format, &a);
+			precision = precision(format, &a, args);
+			width = width(format, &a, args);
 			a++;
-			spec_count = print_spec(format, &a, args, buff);
+			spec_count = print_spec(format, &a, args, buff,
+					flag, width, precision, size);
 			if (spec_count == -1)
 				return (-1);
 			chars_count += spec_count;

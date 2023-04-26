@@ -15,15 +15,17 @@ int write_char(char ch, char buf[], int precision, int width,
 	int a = 0;
 	char padding = ' ';
 
+	(void)(precision);
+	(void)(size);
 	if (flag & 4)
 		padding = '0';
 	buf[a++] = ch;
-	buf[i] = '\0';
+	buf[a] = '\0';
 
 	if (width > 1)
 	{
 		buf[BUFF_SIZE - 1] = '\0'; 
-		for (a = 0, a < width - 1; a++)
+		for (a = 0; a < width - 1; a++)
 		{
 			buf[BUFF_SIZE - a - 2] = padding;
 		}
@@ -33,10 +35,10 @@ int write_char(char ch, char buf[], int precision, int width,
 		}
 		else
 		{
-			return (write(1, &buf[BUFF_SIZE - a - 1], width - 1) + write(1, &buf[0]; 1));
+			return (write(1, &buf[BUFF_SIZE - a - 1], width - 1) + write(1, &buf[0], 1));
 		}
 	}
-	return (1, &buf[0], 1);
+	return (write(1, &buf[0], 1));
 }
 
 /**
@@ -55,7 +57,7 @@ int write_int(int negative_bool, int ind, char buf[], int precision, int width,
 	int l = BUFF_SIZE - ind - 1;
 	char padding = ' ', ch = 0;
 
-	(void)(size)
+	(void)(size);
 	if ((flag & 4) && !(flag & 1))
 		padding = '0';
 	if (negative_bool)
@@ -85,7 +87,7 @@ int write_integer(int ind, char buf[], int precision, int width, int flag, int l
 {
 	int a, padding_start = 1;
 
-	if (precision == 0; && width == 0 && ind = BUFF_SIZE - 2 && buf[ind] == '0')
+	if (precision == 0 && width == 0 && ind == BUFF_SIZE - 2 && buf[ind] == '0')
 		return (0);
 	if (precision == 0 && ind == BUFF_SIZE - 2 && buf[ind] == '0')
 	{
@@ -95,7 +97,7 @@ int write_integer(int ind, char buf[], int precision, int width, int flag, int l
 	if (precision > 0 && precision < l)
 		padding = ' ';
 	for (; precision > l; l++)
-		buffer[--ind] = '0';
+		buf[--ind] = '0';
 	if (ch != 0)
 		l++;
 	if (width > l)
@@ -113,7 +115,7 @@ int write_integer(int ind, char buf[], int precision, int width, int flag, int l
 		{
 			if (ch)
 				buf[--ind] = ch;
-			return (write(1, &buf[1], a - 1) + write(1, &buf[ind], length));
+			return (write(1, &buf[1], a - 1) + write(1, &buf[ind], l));
 		}
 		else if (!(flag & 1) && padding == '0')
 		{

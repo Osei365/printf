@@ -18,18 +18,22 @@
 struct function_specifiers
 {
 	char sp;
-	int (*func)(va_list, char[]);
+	int (*func)(va_list, char[], int, int, int, int);
 };
 /**
  * sp_f - Typedef for struct function_specifiers
  */
 typedef struct function_specifiers sp_f;
 int _printf(const char *format, ...);
-int print_char(va_list args, char buf[]);
-int print_string(va_list args, char buf[]);
-int print_percentage(va_list args, char buf[]);
-int print_integer(va_list args, char buf[]);
-int print_spec(const char *format, int *i, va_list args, char buf[]); 
+int print_char(va_list args, char buf[], int flag, int width, int precision, int size);
+int print_string(va_list args, char buf[], int flag, int width, int precision, int size);
+int print_percentage(va_list args, char buf[], int flag, int width, int precision, int size);
+int print_integer(va_list args, char buf[], int flag, int width, int precision, int size);
+int print_spec(const char *format, int *i, va_list args, char buf[], int flag, int width, int precision, int size);
+int write_char(char ch, char buf[], int precision, int width, int flag, int size);
+int write_int(int negative_bool, int ind, char buf[], int precision, int width, int size, int flag);
+int write_integer(int ind, char buf[], int precision, int width, int flag, int l, char ch, char padding);
+int write_unsigned(int negative_bool, int ind, char buf[], int flag, int width, int precision, int size);
 
 
 
