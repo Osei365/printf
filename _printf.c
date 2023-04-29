@@ -1,8 +1,6 @@
 #include "main.h"
 
 void write_buffer(char buf[], int *b_ind);
-int print_string(va_list args);
-int print_char(va_list args);
 
 /**
  * _printf - prints string literals
@@ -13,6 +11,7 @@ int _printf(const char *format, ...)
 {
 	va_list args;
 	int a, chars_count = 0, b_ind = 0, spec_count = 0;
+	int flags, width, precision, size;
 	char buff[BUFF_SIZE];
 
 	if (format == NULL)
@@ -32,13 +31,13 @@ int _printf(const char *format, ...)
 		else
 		{
 			write_buffer(buff, &b_ind);
+			flags = calc_flags(format, &a);
+			size = calc_size(format, &a);
+			precision = calc_precision(format, &a, args);
+			width = calc_width(format, &a, args);
 			a++;
-			if (format[a] == 'c')
-				spec_count = print_char(args);
-			else if (format[a] == 's')
-				spec_count = print_string(args);
-			else if (format[a] == '%')
-				spec_count = write(1, "%%", 1);
+			spec_count = print_spec(format, &a, args, buff,
+					flags, width, precision, size);
 			if (spec_count == -1)
 				return (-1);
 			chars_count += spec_count;
@@ -54,29 +53,4 @@ void write_buffer(char buf[], int *b_ind)
 	if (*b_ind > 0)
 		write(1, &buf[0], *b_ind);
 	*b_ind = 0;
-}
-
-int print_string(va_list args)
-{
-	char *str;
-	int l;
-
-	str = va_arg(args, char*);
-	l = strlen(str);
-	if (str == NULL)
-	{
-		str = "(nil)";
-	}
-	return (write(1, str, l));
-}
-int print_char(va_list args)
-{
-	char ch;
-	char buf[2];
-	int a = 0;
-
-	ch = va_arg(args, int);
-	buf[a++] = ch;
-	buf[a] = '\0';
-	return (write(1, &buf[0], 1));
 }
